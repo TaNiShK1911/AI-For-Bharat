@@ -1,0 +1,256 @@
+/* Main styles for AI Docs Interpreter side panel */
+
+.container {
+  padding: 16px;
+  font-family: var(--vscode-font-family);
+  font-size: var(--vscode-font-size);
+  color: var(--vscode-foreground);
+}
+
+.header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  padding-bottom: 12px;
+}
+
+.header h2 {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--vscode-foreground);
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--vscode-descriptionForeground);
+  font-style: italic;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.button {
+  padding: 6px 12px;
+  border: 1px solid var(--vscode-button-border);
+  border-radius: 2px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.button.primary {
+  background-color: var(--vscode-button-background);
+  color: var(--vscode-button-foreground);
+}
+
+.button.primary:hover {
+  background-color: var(--vscode-button-hoverBackground);
+}
+
+.button.secondary {
+  background-color: var(--vscode-button-secondaryBackground);
+  color: var(--vscode-button-secondaryForeground);
+}
+
+.button.secondary:hover {
+  background-color: var(--vscode-button-secondaryHoverBackground);
+}
+
+.content {
+  min-height: 200px;
+}
+
+.welcome {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.welcome p {
+  margin-bottom: 16px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.features li {
+  margin: 8px 0;
+  color: var(--vscode-descriptionForeground);
+  font-size: 13px;
+}
+
+.loading {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--vscode-progressBar-background);
+  border-top: 2px solid var(--vscode-progressBar-foreground);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading p {
+  color: var(--vscode-descriptionForeground);
+  font-size: 13px;
+}
+
+.error {
+  padding: 16px;
+  background-color: var(--vscode-inputValidation-errorBackground);
+  border: 1px solid var(--vscode-inputValidation-errorBorder);
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.error h3 {
+  margin: 0 0 8px 0;
+  color: var(--vscode-errorForeground);
+  font-size: 14px;
+}
+
+.error p {
+  margin: 0;
+  color: var(--vscode-errorForeground);
+  font-size: 13px;
+}
+
+.explanation {
+  background-color: var(--vscode-editor-background);
+  border: 1px solid var(--vscode-panel-border);
+  border-radius: 4px;
+  padding: 16px;
+}
+
+.explanation-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px 0;
+}
+
+.explanation-bullets li {
+  margin: 8px 0;
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.explanation-bullets li::before {
+  content: "•";
+  color: var(--vscode-textLink-foreground);
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.citations {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--vscode-panel-border);
+}
+
+.citations-header h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--vscode-foreground);
+  font-weight: 600;
+}
+
+.citations-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.citation-item {
+  margin: 8px 0;
+  padding: 8px;
+  background-color: var(--vscode-list-hoverBackground);
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.citation-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.citation-main strong {
+  color: var(--vscode-textLink-foreground);
+}
+
+.citation-section {
+  color: var(--vscode-descriptionForeground);
+  font-style: italic;
+}
+
+.citation-relevance {
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.confidence {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--vscode-panel-border);
+}
+
+.confidence-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.confidence-label {
+  font-size: 12px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.confidence-progress {
+  height: 6px;
+  background-color: var(--vscode-progressBar-background);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.confidence-fill {
+  height: 100%;
+  background-color: var(--vscode-progressBar-foreground);
+  transition: width 0.3s ease;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 300px) {
+  .controls {
+    flex-direction: column;
+  }
+  
+  .citation-main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}

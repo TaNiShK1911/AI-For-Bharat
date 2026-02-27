@@ -1,0 +1,203 @@
+{
+  "name": "ai-docs-interpreter",
+  "displayName": "AI Docs Interpreter",
+  "description": "AI-powered documentation interpreter that explains code using only project documentation",
+  "version": "0.0.1",
+  "publisher": "YOUR_PUBLISHER_ID_HERE",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/ai-docs-interpreter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/ai-docs-interpreter/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/ai-docs-interpreter#readme",
+  "engines": {
+    "vscode": "^1.108.1"
+  },
+  "categories": [
+    "Machine Learning",
+    "Education",
+    "Other"
+  ],
+  "keywords": [
+    "documentation",
+    "ai",
+    "code explanation",
+    "rag",
+    "local-first"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:typescript",
+    "onLanguage:json"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "ai-docs-interpreter.indexDocumentation",
+        "title": "AI Docs: Index Documentation"
+      },
+      {
+        "command": "ai-docs-interpreter.explainSelectedCode",
+        "title": "AI Docs: Explain Selected Code"
+      },
+      {
+        "command": "ai-docs-interpreter.showConfiguration",
+        "title": "AI Docs: Show Configuration"
+      },
+      {
+        "command": "ai-docs-interpreter.resetConfiguration",
+        "title": "AI Docs: Reset Configuration"
+      },
+      {
+        "command": "ai-docs-interpreter.clearCache",
+        "title": "AI Docs: Clear Cache"
+      },
+      {
+        "command": "ai-docs-interpreter.runDiagnostics",
+        "title": "AI Docs: Run Diagnostics"
+      }
+    ],
+    "views": {
+      "explorer": [
+        {
+          "id": "ai-docs-interpreter.sidePanel",
+          "name": "AI Docs Explanation",
+          "when": "resourceExtname == .js || resourceExtname == .ts || resourceExtname == .json"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "AI Docs Interpreter",
+      "properties": {
+        "aiDocsInterpreter.indexing.includePaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["README.md", "docs/**/*.md"],
+          "description": "Paths to include when indexing documentation. Supports glob patterns."
+        },
+        "aiDocsInterpreter.indexing.excludePaths": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["node_modules/**", ".git/**", "dist/**", "build/**"],
+          "description": "Paths to exclude when indexing documentation. Supports glob patterns."
+        },
+        "aiDocsInterpreter.indexing.maxFileSize": {
+          "type": "number",
+          "default": 1048576,
+          "description": "Maximum file size in bytes to process during indexing (default: 1MB)"
+        },
+        "aiDocsInterpreter.indexing.autoReindex": {
+          "type": "boolean",
+          "default": false,
+          "description": "Automatically re-index documentation when files change"
+        },
+        "aiDocsInterpreter.retrieval.topK": {
+          "type": "number",
+          "default": 5,
+          "minimum": 1,
+          "maximum": 20,
+          "description": "Number of top similar documentation chunks to retrieve for explanations"
+        },
+        "aiDocsInterpreter.retrieval.similarityThreshold": {
+          "type": "number",
+          "default": 0.3,
+          "minimum": 0.0,
+          "maximum": 1.0,
+          "description": "Minimum similarity threshold for including documentation chunks in explanations"
+        },
+        "aiDocsInterpreter.retrieval.maxContextLength": {
+          "type": "number",
+          "default": 2000,
+          "minimum": 100,
+          "maximum": 10000,
+          "description": "Maximum length of context to include in explanations (in characters)"
+        },
+        "aiDocsInterpreter.ui.hoverEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable hover explanations for code symbols"
+        },
+        "aiDocsInterpreter.ui.sidePanelEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable side panel for detailed explanations"
+        },
+        "aiDocsInterpreter.ui.maxHoverLines": {
+          "type": "number",
+          "default": 3,
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Maximum number of lines to show in hover explanations"
+        },
+        "aiDocsInterpreter.ui.dynamicUpdates": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable dynamic explanation updates when code selection changes"
+        },
+        "aiDocsInterpreter.cache.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable caching of explanations for better performance"
+        },
+        "aiDocsInterpreter.cache.ttlMinutes": {
+          "type": "number",
+          "default": 30,
+          "minimum": 1,
+          "maximum": 1440,
+          "description": "Time-to-live for cached explanations in minutes"
+        },
+        "aiDocsInterpreter.logging.level": {
+          "type": "string",
+          "enum": ["debug", "info", "warn", "error"],
+          "default": "info",
+          "description": "Logging level for the extension"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run lint && node esbuild.js --production",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "@types/vscode": "^1.108.1",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "esbuild": "^0.27.2",
+    "eslint": "^9.39.2",
+    "fast-check": "^3.15.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.52.0"
+  },
+  "dependencies": {
+    "@typescript-eslint/parser": "^8.53.1",
+    "@typescript-eslint/typescript-estree": "^8.53.1",
+    "glob": "^10.3.10",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.0.0",
+    "node-fetch": "^3.3.2",
+    "sqlite3": "^5.1.6"
+  }
+}
